@@ -7,7 +7,6 @@ WORKDIR /var/www/html
 
 # Install dependencies
 RUN apk update && apk add --no-cache \
-    mysql-client \
     openldap-dev\
     freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev oniguruma-dev \
     icu-libs \
@@ -46,8 +45,9 @@ RUN sed -i '/LoadModule rewrite_module/s/^#//g' /etc/apache2/httpd.conf && \
 RUN mkdir -p "/sessions" && chown www-data:www-data /sessions && chmod 0777 /sessions
 VOLUME [ "/sessions" ]
 
+# Copy .env
+COPY config/.env /var/www/html/config/.env
+
 # Expose port 9000 and start php-fpm server
 ENTRYPOINT ["/start.sh"]
 EXPOSE 80
-
-
