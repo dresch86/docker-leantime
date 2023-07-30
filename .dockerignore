@@ -1,4 +1,4 @@
 .git
 .vscode
 .DS_store
-.env
+.env.lean
